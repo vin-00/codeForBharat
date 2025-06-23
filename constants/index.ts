@@ -239,13 +239,13 @@ export const generator: CreateWorkflowDTO = {
         + "Your interview ID is {{ apiRequest_1747470739045.interviewId }}.",
       voice: { provider: "deepgram", voiceId: "thalia", model: "aura-2" },
       },
-      prompt:
-        "Thank the user for the conversation and inform them that the interview was generated successfully.",
-      voice: {
-        provider: "deepgram",
-        voiceId: "thalia",
-        model: "aura-2",
-      },
+      // prompt:
+      //   "Thank the user for the conversation and inform them that the interview was generated successfully.",
+      // voice: {
+      //   provider: "deepgram",
+      //   voiceId: "thalia",
+      //   model: "aura-2",
+      // },
     },
     {
       name: "conversation_1747744490967",
