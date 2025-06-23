@@ -208,9 +208,24 @@ export const generator: CreateWorkflowDTO = {
       //   type: "object",
       //   properties: {},
       // },
+
+      output: {
+        type: "object",
+        properties: {
+          questions: {
+            type: "array",
+            items: { type: "string" }
+          },
+          interviewId: {
+            type: "string"
+          }
+        }
+      },
+
       mode: "blocking",
       hooks: [],
     },
+    
     {
       name: "conversation_1747721261435",
       type: "conversation",
@@ -219,6 +234,10 @@ export const generator: CreateWorkflowDTO = {
           x: -17.547788169718615,
           y: 1003.3409337989506,
         },
+      prompt:
+        "Thank you! Your interview has been generated successfully. "
+        + "Your interview ID is {{ apiRequest_1747470739045.interviewId }}.",
+      voice: { provider: "deepgram", voiceId: "thalia", model: "aura-2" },
       },
       prompt:
         "Thank the user for the conversation and inform them that the interview was generated successfully.",
