@@ -12,7 +12,7 @@ export async function GET(){
 
 
 export async function POST(request :Request){
-    const user = await getCurrentUser();
+    // const user = await getCurrentUser();
     const { type, role , level , techstack , amount , userid } = await request.json();
     console.log("I am here-->",userid);
     try{
@@ -36,7 +36,7 @@ export async function POST(request :Request){
 
         const interview = {
             role , level , type , techstack : techstack.split(',') , questions : JSON.parse(questions) ,
-            userId : user.id , finalized : true,
+            userId : userid , finalized : true,
             coverImage : getRandomInterviewCover(),
             createdAt : new Date().toISOString()
         }

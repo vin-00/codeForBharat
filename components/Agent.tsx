@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import React ,{useEffect, useState} from 'react'
 
 import { vapi } from "@/lib/vapi.sdk"
-import { interviewer } from '@/constants';
+import { interviewer, generator } from '@/constants';
 import { createFeedback } from '@/lib/actions/general.actions';
 import { toast } from 'sonner';
 
@@ -107,13 +107,19 @@ const Agent = ({userName , userId, userInitial ,avatarColor  , type , interviewI
         setCallStatus(CallStatus.CONNECTING);
 
         if(type==='generate'){
-            console.log(userName+" "+userId+" ---->>");
-                await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!,{
-                variableValues :{
-                    username :userName ,
-                    userid : userId,
-                }
-            })
+            await vapi.start(
+                undefined,
+                {
+                  variableValues: {
+                    username: userName,
+                    userid: userId,
+                  },
+                  clientMessages: ["transcript"],
+                  serverMessages: [],
+                },
+                undefined,
+                generator
+            );
         }
         else{
             let formattedQuestions = '';
@@ -123,7 +129,10 @@ const Agent = ({userName , userId, userInitial ,avatarColor  , type , interviewI
                 await vapi.start(interviewer,{
                     variableValues :{
                         questions : formattedQuestions
-                    }
+                    },
+                    clientMessages: ["transcript"],
+                    serverMessages: [],
+
                 })
             }
         }
