@@ -2,6 +2,7 @@ import {generateText} from "ai";
 import {google} from "@ai-sdk/google"
 import { getRandomInterviewCover } from "@/lib/utils";
 import { db } from "@/firebase/admin";
+import { getCurrentUser } from "@/lib/actions/auth.action";
 
 export async function GET(){
     return Response.json({
@@ -11,8 +12,9 @@ export async function GET(){
 
 
 export async function POST(request :Request){
+    const user = await getCurrentUser();
     const { type, role , level , techstack , amount , userid } = await request.json();
-
+    console.log("I am here-->",userid);
     try{
 
         const {text : questions} = await generateText({
@@ -34,7 +36,7 @@ export async function POST(request :Request){
 
         const interview = {
             role , level , type , techstack : techstack.split(',') , questions : JSON.parse(questions) ,
-            userId : userid , finalized : true,
+            userId : user.id , finalized : true,
             coverImage : getRandomInterviewCover(),
             createdAt : new Date().toISOString()
         }
@@ -45,6 +47,6 @@ export async function POST(request :Request){
     }
     catch(error){
         console.error(error);
-        return Response.json({success:false , error },{status:5000});
+        return Response.json({success:false , error },{status:500});
     }
 }

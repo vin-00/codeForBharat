@@ -9,6 +9,7 @@ const page = async () => {
   const userInitial = user?.name ? user.name.charAt(0).toUpperCase() : '?';
   const avatarColor = user?.avatarColor || 'bg-blue-500'; // Default to blue if no color is set
 
+  // console.log(user);
   return (
     <>
         <h3>Interview Generation</h3>

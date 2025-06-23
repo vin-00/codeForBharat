@@ -98,8 +98,6 @@ const Agent = ({userName , userId, userInitial ,avatarColor  , type , interviewI
                 router.push('/');
             }
             else{
-
-                
                 handleGenerateFeedback(messages);
             }
         }
@@ -109,6 +107,7 @@ const Agent = ({userName , userId, userInitial ,avatarColor  , type , interviewI
         setCallStatus(CallStatus.CONNECTING);
 
         if(type==='generate'){
+            console.log(userName+" "+userId+" ---->>");
                 await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!,{
                 variableValues :{
                     username :userName ,
