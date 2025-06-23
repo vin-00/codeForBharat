@@ -1,20 +1,24 @@
-import Agent from '@/components/Agent'
+import InterviewForm from '@/components/InterviewForm'
 import { getCurrentUser } from '@/lib/actions/auth.action'
 import React from 'react'
+import { redirect } from 'next/navigation'
 
 const page = async () => {
-
   const user = await getCurrentUser();
-  // Get user's initial for avatar and color
-  const userInitial = user?.name ? user.name.charAt(0).toUpperCase() : '?';
-  const avatarColor = user?.avatarColor || 'bg-blue-500'; // Default to blue if no color is set
+  
+  // Redirect if not authenticated
+  if (!user) {
+    redirect('/sign-in');
+  }
 
-  // console.log(user);
   return (
-    <>
-        <h3>Interview Generation</h3>
-        <Agent userName={user?.name || ''} userInitial={userInitial} avatarColor={avatarColor} userId={user?.id} type='generate' />
-    </>
+    <div className="w-full mx-auto py-12 px-4 bg-dark-300">
+      <h1 className="text-4xl font-bold text-primary-100 mb-4 text-center">Interview Generation</h1>
+      <p className="text-center text-primary-300 mb-12 max-w-2xl mx-auto">
+        Create a customized interview experience tailored to your specific needs and requirements.
+      </p>
+      <InterviewForm userId={user.id} />
+    </div>
   )
 }
 
