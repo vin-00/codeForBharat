@@ -1,10 +1,11 @@
+# ![PrepWise Logo](/public/logo.svg)
 # PrepWise - AI-Powered Interview Practice Platform
-
-![PrepWise Logo](/public/logo.svg)
-
 ## Overview
 
 PrepWise is an AI-powered interview preparation platform designed to help job seekers practice and improve their interview skills. The application uses advanced AI technology to generate customized interview questions, conduct realistic interview simulations, and provide detailed feedback and scoring to help users identify their strengths and areas for improvement.
+
+![image](https://github.com/user-attachments/assets/24f52e77-48b6-4e24-90ef-3e6b2846db6a)
+
 
 ## Features
 
