@@ -88,16 +88,7 @@ PrepWise is an AI-powered interview preparation platform designed to help job se
 2. Review your overall score, category scores, strengths, and areas for improvement
 3. Rate the interview experience to help improve the platform
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Acknowledgements
 
 - Google Gemini AI for powering the question generation and feedback
 - Vapi AI for the voice interface
-- All contributors who have helped shape this project
