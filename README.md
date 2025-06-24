@@ -62,57 +62,6 @@ PrepWise is an AI-powered interview preparation platform designed to help job se
 ### Authentication
 - Firebase Authentication for secure user management
 
-## Getting Started
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-- Firebase account
-- Google AI API key
-- Vapi AI account
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/prepwise.git
-cd prepwise
-```
-
-2. Install dependencies
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Set up environment variables
-Create a `.env.local` file in the root directory with the following variables:
-```
-# Firebase
-FIREBASE_API_KEY=your_firebase_api_key
-FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-FIREBASE_PROJECT_ID=your_firebase_project_id
-FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-FIREBASE_APP_ID=your_firebase_app_id
-
-# Google AI
-GOOGLE_AI_API_KEY=your_google_ai_api_key
-
-# Vapi AI
-VAPI_API_KEY=your_vapi_api_key
-```
-
-4. Run the development server
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
-
 ## Usage
 
 ### Creating an Interview
