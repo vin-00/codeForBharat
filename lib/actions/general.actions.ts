@@ -4,6 +4,7 @@ import { feedbackSchema } from "@/constants";
 import { db } from "@/firebase/admin";
 import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
+import calculateAverageScore from "../calculateAverageScore.js"
 
 export async function getInterviewByUserId(userId : string):Promise<Interview[] | null>{
     const interviews = await db.collection('interviews').where('userId','==',userId).orderBy('createdAt','desc').get();
@@ -71,13 +72,12 @@ export async function getInterviewById(id: string, requestingUserId?: string): P
 
 export async function createFeedback(params : CreateFeedbackParams){
     const {interviewId , userId , transcript} = params;
-console.log("here");
     try{
         const formattedTranscript = transcript.map((sentence :{role : string ; content : string; })=>(
             `- ${sentence.role}: ${sentence.content}\n`
         )).join('');
 
-        console.log("here1");
+        
         const {object :{totalScore , categoryScores , strengths , areasForImprovement , finalAssessment} } = await generateObject({
             model : google('gemini-2.0-flash-001',{
                 structuredOutputs : false,
@@ -99,22 +99,21 @@ console.log("here");
         "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
         });
 
-        console.log("here2")
         const check = await getFeedbackByInterviewId({interviewId , userId})
-        console.log("here3");
+        const total = calculateAverageScore(categoryScores);
         if(check){
-            if(check.totalScore>totalScore){
+            if(check.totalScore>total){
                 // Previous score was more
                 return {
                     success : true,
                     feedbackId : check.id,
-                    score : totalScore
+                    score : total
                 }
             }
             else{
                 // Updating previous score 
                 await db.collection('feedback').doc(check.id).update({
-                    totalScore, categoryScores, strengths, areasForImprovement, finalAssessment, createdAt : new Date().toISOString()
+                    total, categoryScores, strengths, areasForImprovement, finalAssessment, createdAt : new Date().toISOString()
                 })
 
                 return {
@@ -123,12 +122,10 @@ console.log("here");
                 }
             }
         }
-        console.log("here4");
         const feedback = await db.collection('feedback').add({
-            interviewId , userId , totalScore , categoryScores , strengths , areasForImprovement , finalAssessment , createdAt : new Date().toISOString() 
+            interviewId , userId , total , categoryScores , strengths , areasForImprovement , finalAssessment , createdAt : new Date().toISOString() 
         })
 
-        console.log("here5");
         return {
             success : true,
             feedbackId : feedback.id
@@ -151,7 +148,6 @@ export async function getFeedbackByInterviewId(params : GetFeedbackByInterviewId
     } 
     
     const feedbackDoc = feedback.docs[0];
-
     return {
         id : feedbackDoc.id , ...feedbackDoc.data()
     } as Feedback;
