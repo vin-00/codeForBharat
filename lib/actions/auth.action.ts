@@ -99,15 +99,12 @@ export async function getCurrentUser():Promise<User
 
     try{
         const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
-
         const userRecord = await db.collection('users').doc(decodedClaims.uid).get();
 
-        if(!userRecord){
+        if(!userRecord.exists){
             return null;
         }
-
         const userData = userRecord.data();
-        
         // If user doesn't have an avatar color, assign one and update the record
         if (!userData?.avatarColor) {
             const { getRandomAvatarColor } = await import('@/lib/utils');
